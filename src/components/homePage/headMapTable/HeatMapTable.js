@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { CircularProgress } from "@mui/material";
 import HeatMapTableHead from "./HeatMapTableHead";
-import { IDENTITY_TOKEN } from "../../../common/Wrapper";
+import { IDENTITY_TOKEN } from "../../../utils/Wrapper";
 import { useTheme } from "../../../config/themeProvider";
-import { getColor } from "../../../common/data";
+import { getColor } from "../../../utils/data";
 
 // Heatmap table component
 const HeatMapTable = () => {

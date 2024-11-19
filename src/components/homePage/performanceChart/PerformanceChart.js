@@ -3,9 +3,9 @@ import { Line } from "react-chartjs-2";
 import { Chart as ChartJS, CategoryScale, LinearScale,
   Title, Tooltip, Legend, PointElement, LineElement,
 } from "chart.js";
-import { matricsColors } from "../../../common/data";
+import { matricsColors } from "../../../utils/data";
 import { CircularProgress } from "@mui/material";
-import { IDENTITY_TOKEN } from "../../../common/Wrapper";
+import { IDENTITY_TOKEN } from "../../../utils/Wrapper";
 
 ChartJS.register(
   CategoryScale,

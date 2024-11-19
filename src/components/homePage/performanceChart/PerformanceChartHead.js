@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { IDENTITY_TOKEN } from "../../../common/Wrapper";
+import { IDENTITY_TOKEN } from "../../../utils/Wrapper";
 import Dropdown from "./Dropdown";
 import { useTheme } from "../../../config/themeProvider";
 

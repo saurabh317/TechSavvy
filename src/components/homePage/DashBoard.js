@@ -4,7 +4,7 @@ import Sidebar from "./Navigation/SideBar";
 import PerformanceChartHead from "./performanceChart/PerformanceChartHead";
 import PerformanceChart from "./performanceChart/PerformanceChart";
 import HeatMapTable from "./headMapTable/HeatMapTable";
-import { ContentWrapper } from "../../common/Wrapper";
+import { ContentWrapper } from "../../utils/Wrapper";
 
 const DashBoard = ({ SetIsLoggedIn }) => {
   const rect = document.body.getBoundingClientRect()
