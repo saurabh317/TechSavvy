@@ -3,6 +3,7 @@ import { CircularProgress } from "@mui/material";
 import HeatMapTableHead from "./HeatMapTableHead";
 import { IDENTITY_TOKEN } from "../../../common/Wrapper";
 import { useTheme } from "../../../config/themeProvider";
+import { getColor } from "../../../common/data";
 
 // Heatmap table component
 const HeatMapTable = () => {
@@ -21,13 +22,6 @@ const HeatMapTable = () => {
   const totalImpressions = new Array(data.length).fill(0);
   const totalClicks = new Array(data.length).fill(0);
   const totalCPM = new Array(data.length).fill(0);
-
-  // Function to determine cell background color based on value and range
-  const getColor = (value, min, max, reversed = false) => {
-    const normalizedValue = (value - min) / (max - min);
-    const intensity = reversed ? 1 - normalizedValue : normalizedValue;
-    return `rgba(${255 - intensity * 255}, ${255 - intensity * 255}, 255, 1)`; // Blue gradient
-  };
 
   // fetch data required for the creating heatmap table
   const fetchHeatMapData = useCallback(() => {
@@ -152,7 +146,8 @@ const HeatMapTable = () => {
                             backgroundColor: getColor(
                               hourlyData.Impressions,
                               day.min_Impressions,
-                              day.max_Impressions
+                              day.max_Impressions,
+                              "Imp"
                             ),
                           }}>
                           {hourlyData.Impressions.toFixed(2)}
@@ -165,7 +160,8 @@ const HeatMapTable = () => {
                             backgroundColor: getColor(
                               hourlyData.Clicks,
                               day.min_Clicks,
-                              day.max_Clicks
+                              day.max_Clicks,
+                              "Clicks"
                             ),
                           }}>
                           {hourlyData.Clicks.toFixed(2)}
@@ -179,7 +175,7 @@ const HeatMapTable = () => {
                               hourlyData.CPM,
                               day.min_CPM,
                               day.max_CPM,
-                              true // Reversed for CPM
+                              "CPM",
                             ),
                           }}>
                           {hourlyData.CPM.toFixed(2)}

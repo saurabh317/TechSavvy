@@ -12,6 +12,8 @@ body {
   background-color: rgb(226, 223, 223);
 }
 
+body { font-family: 'Poppins', sans-serif;}
+
 body::-webkit-scrollbar {
   display: none;
 }

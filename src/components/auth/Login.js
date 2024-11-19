@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from "react";
 import { CircularProgress } from '@mui/material';
 import { MailIcon, LockClosedIcon } from "@heroicons/react/solid";
+import logo from "../../assests/TechSavvyLogo.png"
 
 const LoginPage = ({ SetIsLoggedIn }) => {
   const [inLogInProcess, setInLogInProcess] = useState(false)
@@ -45,7 +46,14 @@ const LoginPage = ({ SetIsLoggedIn }) => {
 
   return (
     <div className="flex items-center justify-center flex-col gap-5 min-h-screen bg-gradient-to-br from-pink-200 via-pink-100 to-blue-200 ">
-      <h2 className="mb-6 text-5xl leading-10 tracking-wide text-center font-raleway">TECHSAVVY</h2>
+      <div className="flex items-center">
+        <img
+          src={logo}
+          alt="Company Logo"
+          className="w-30 h-20"
+        />
+        <h2 className="text-5xl tracking-wider text-center">TECHSAVVY</h2>
+      </div>
       <div className="w-[90%] max-w-[500px] p-16 bg-white rounded-lg shadow-lg">
         <h2 className="mb-6 text-2xl font-bold text-center">Welcome Back!</h2>
         <form onSubmit={handleSubmit}>

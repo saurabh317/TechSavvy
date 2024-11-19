@@ -1,5 +1,61 @@
 export const matricsColors = [
   {
+    label: "IMP",
+    code: "Impressions",
+    borderColor: "rgb(150, 150, 200)",
+    backgroundColor: "rgba(150, 150, 200, 0.9)",
+    tension: 0.4,
+  },
+  {
+    label: "Clicks",
+    code: "Clicks",
+    borderColor: "rgb(200, 100, 120)",
+    backgroundColor: "rgba(200, 100, 120, 0.9)",
+    tension: 0.4,
+  },
+  {
+    label: "CPM",
+    code: "CPM",
+    borderColor: "rgb(0, 130, 180)",
+    backgroundColor: "rgba(0, 130, 180, 0.9)",
+    tension: 0.4,
+  },
+  {
+    label: "CPC",
+    code: "CPC",
+    borderColor: "rgb(0, 100, 150)",
+    backgroundColor: "rgba(0, 100, 150, 0.9)",
+    tension: 0.4,
+  },
+  {
+    label: "CPO",
+    code: "CPO",
+    borderColor: "rgb(0, 70, 160)",
+    backgroundColor: "rgba(0, 70, 160, 0.9)",
+    tension: 0.4,
+  },
+  {
+    label: "ACOS",
+    code: "ACOS",
+    borderColor: "rgb(0, 120, 140)",
+    backgroundColor: "rgba(0, 120, 140, 0.9)",
+    tension: 0.4,
+  },
+  {
+    label: "CPA",
+    code: "CPA",
+    borderColor: "rgb(0, 140, 150)",
+    backgroundColor: "rgba(0, 140, 150, 0.9)",
+    tension: 0.4,
+  },
+  {
+    label: "ROAS",
+    code: "ROAS",
+    borderColor: "rgb(120, 80, 40)",
+    backgroundColor: "rgba(120, 80, 40, 0.9)",
+    tension: 0.4,
+  },
+  {
     label: "Spend",
     code: "Spend",
     borderColor: "rgb(255, 99, 132)",
@@ -23,64 +79,54 @@ export const matricsColors = [
   {
     label: "CR %",
     code: "CR_perc",
-    borderColor: "rgb(25, 932, 192)",
-    backgroundColor: "rgba(25, 932, 192, 0.9)",
-    tension: 0.4,
-  },
-  {
-    label: "ACOS",
-    code: "ACOS",
-    borderColor: "rgb(153, 102, 255)",
-    backgroundColor: "rgba(153, 102, 255, 0.9)",
-    tension: 0.4,
-  },
-  {
-    label: "ROAS",
-    code: "ROAS",
-    borderColor: "rgb(255, 159, 64)",
-    backgroundColor: "rgba(255, 159, 64, 0.9)",
-    tension: 0.4,
-  },
-  {
-    label: "AOV",
-    code: "AOV",
-    borderColor: "rgb(201, 203, 207)",
-    backgroundColor: "rgba(201, 203, 207, 0.9)",
-    tension: 0.4,
-  },
-  {
-    label: "CPC",
-    code: "CPC",
-    borderColor: "rgb(75, 192, 192)",
-    backgroundColor: "rgba(75, 192, 192, 0.9)",
-    tension: 0.4,
-  },
-  {
-    label: "Impressions",
-    code: "Impressions",
-    borderColor: "rgb(46, 139, 87)",
-    backgroundColor: "rgba(46, 139, 87, 0.9)",
-    tension: 0.4,
-  },
-  {
-    label: "Clicks",
-    code: "Clicks",
-    borderColor: "rgb(70, 130, 180)",
-    backgroundColor: "rgba(70, 130, 180, 0.9)",
-    tension: 0.4,
-  },
-  {
-    label: "CPM",
-    code: "CPM",
-    borderColor: "rgb(220, 20, 60)",
-    backgroundColor: "rgba(220, 20, 60, 0.9)",
-    tension: 0.4,
-  },
-  {
-    label: "CTR %",
-    code: "CTR",
-    borderColor: "rgb(15, 140, 0)",
-    backgroundColor: "rgba(15, 140, 0, 0.9)",
+    borderColor: "rgb(15, 70, 130)",
+    backgroundColor: "rgba(15, 70, 130, 0.9)",
     tension: 0.4,
   },
 ];
+
+
+export const getColor = (value, min, max, label) => {
+  const normalizedValue = (value - min) / (max - min);
+
+  const darkToLightMetrics = ['CPC', 'CPM', 'CPO', 'ACOS', 'CPA'];
+  const lightToDarkMetrics = ['Imp', 'Clicks'];
+
+  let intensity;
+  if (darkToLightMetrics.includes(label)) {
+    // Intensity goes from dark to light
+    intensity = 1 - normalizedValue;
+  } else if (lightToDarkMetrics.includes(label)) {
+    // Intensity goes from light to dark
+    intensity = normalizedValue;
+  }
+
+  // Apply different color shades for each label
+  switch (label) {
+    case 'Imp':
+      // Lavender color: light to dark
+      return `rgba(${230 - intensity * 80}, ${230 - intensity * 80}, 255, 1)`;
+    case 'Clicks':
+      // Pink color: light to dark
+      return `rgba(${255}, ${180 - intensity * 90}, ${200 - intensity * 90}, 1)`;
+    case 'CPM':
+      // Cyan color: dark to light
+      return `rgba(${80 + intensity * 100}, ${180 + intensity * 50}, 255, 1)`;
+    case 'CPC':
+      // Teal color: dark to light
+      return `rgba(${50 + intensity * 100}, ${150 + intensity * 80}, 200 + intensity * 55, 1)`;
+    case 'CPO':
+      // Blue color: dark to light
+      return `rgba(${30 + intensity * 70}, ${100 + intensity * 120}, 220, 1)`;
+    case 'ACOS':
+      // Greenish-cyan color: dark to light
+      return `rgba(${60 + intensity * 80}, ${180 + intensity * 60}, 210 + intensity * 45, 1)`;
+    case 'CPA':
+      // Mint color: dark to light
+      return `rgba(${90 + intensity * 80}, ${200 + intensity * 40}, 220 + intensity * 35, 1)`;
+    default:
+      // Default color if the label is not matched
+      return `rgba(200, 200, 200, 1)`;
+  }
+};
+

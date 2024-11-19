@@ -40,11 +40,11 @@ const Dropdown = ({ allOptions, handleSelectedOptions, selectedMatrices }) => {
     <div className="relative">
       <button
         onClick={toggleDropdown}
-        className={`px-4 py-2 rounded-md ${rect.width > 768 ? "w-48" : ''}
+        className={`px-4 py-2 rounded-md ${rect.width > 768 ? "w-32" : ''}
           ${darkMode ? 'bg-gray-700' : 'bg-gray-200'} z-[1000]`
         }
       >
-        {rect.width > 768 && 'Select Metrics'}
+        {rect.width > 768 && 'Metrics'}
         {!isOpen && <ArrowDropDownIcon/>}
         {isOpen && <ArrowDropUpIcon/>}
       </button>

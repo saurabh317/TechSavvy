@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { HomeIcon } from "@heroicons/react/outline";
+import logo from "../../../assests/TechSavvyLogo.png"
 import { useTheme } from "../../../config/themeProvider";
 
 function Sidebar() {
@@ -16,14 +17,14 @@ function Sidebar() {
       onMouseLeave={() => setIsHovered(false)}>
 
       {/* Company Icon */}
-      <div className="flex items-center justify-center h-[55px] gap-1">
+      <div className={`flex items-center h-[55px] gap-1 ${isHovered ? "px-5" : 'px-2'}`}>
         <img
-          src="https://via.placeholder.com/40"
+          src={logo}
           alt="Company Logo"
           className="w-10 h-10"
         />
         {isHovered && (
-          <span className="text-2xl font-bold leading-3">TECHSAVVY</span>
+          <span className="text-xl font-semibold">TECHSAVVY</span>
         )}
       </div>
 
