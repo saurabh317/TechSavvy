@@ -1,13 +1,19 @@
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). </br>
-Check out the published App 🚀 [Live DashBoard](https://dashboardtechsavvy.netlify.app/)
+Check out the published App 🚀 [Live DashBoard](https://dashboardtechsavvy.netlify.app/) </br>
+check out the snapshots [dashboard1](https://github.com/user-attachments/assets/cc054a7b-ebdc-43a0-97ef-759213bad9a6)![dashboard2](https://github.com/user-attachments/assets/6100b433-14ca-4a5c-aaf4-59dedc98279b)![dashboard3](https://github.com/user-attachments/assets/91b04add-e0c8-4f04-b8d6-2d04074b0994)![sidebar](https://github.com/user-attachments/assets/36caeedb-924b-4df6-8d23-c9a597ecf096)![Login](https://github.com/user-attachments/assets/78133725-7aa2-43c2-9051-aa59c2cbf599)
+
+
+
+
 
 ## Available Scripts
 
 In the project directory, you can run:
 
-### `npm start`
+### `npm start`!
+
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
