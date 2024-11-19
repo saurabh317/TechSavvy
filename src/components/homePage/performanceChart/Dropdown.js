@@ -6,6 +6,7 @@ import { useTheme } from "../../../config/themeProvider";
 const Dropdown = ({ allOptions, handleSelectedOptions, selectedMatrices }) => {
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
+  const rect = document.body.getBoundingClientRect()
   const { darkMode } = useTheme();
 
   const toggleDropdown = () => {
@@ -39,11 +40,11 @@ const Dropdown = ({ allOptions, handleSelectedOptions, selectedMatrices }) => {
     <div className="relative">
       <button
         onClick={toggleDropdown}
-        className={`px-4 py-2 rounded-md w-48
-          ${darkMode ? 'bg-gray-700' : 'bg-gray-200'}`
+        className={`px-4 py-2 rounded-md ${rect.width > 768 ? "w-48" : ''}
+          ${darkMode ? 'bg-gray-700' : 'bg-gray-200'} z-[1000]`
         }
       >
-        Select Metrics
+        {rect.width > 768 && 'Select Metrics'}
         {!isOpen && <ArrowDropDownIcon/>}
         {isOpen && <ArrowDropUpIcon/>}
       </button>

@@ -50,13 +50,13 @@ const PerformanceChartHead = ({ accumulateSelectedOptions, selectedMatrices }) =
   }
 
   return (
-    <div className={`flex justify-between items-center p-2 rounded-lg 
+    <div className={`flex justify-between items-baseline sm:items-center p-2 rounded-lg
       ${darkMode ? 'border-gray-600 bg-gray-800 text-white' : 'border-gray-300 bg-white text-black'}`}
     >
       {/* Left Side Content */}
       <div className="flex-1">
         <h3 className="text-lg font-bold mb-1">Performance Chart</h3>
-        <p className={`${darkMode ? 'text-gray-300' : 'text-gray-600'} text-sm`}>
+        <p className={`${darkMode ? 'text-gray-400' : 'text-gray-600'} text-sm`}>
           Key Metrics for Dayparting Schedule Performance Evaluation
         </p>
       </div>
