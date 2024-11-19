@@ -1,7 +1,7 @@
 # Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-Check out the published App 🚀 [live](https://dashboardtechsavvy.netlify.app/)
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). </br>
+Check out the published App 🚀 [Live DashBoard](https://dashboardtechsavvy.netlify.app/)
 
 ## Available Scripts
 
