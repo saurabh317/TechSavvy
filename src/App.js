@@ -1,23 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
+import "./App.css";
+import LoginPage from "./components/auth/Login";
+import DashBoard from "./components/homePage/DashBoard";
+import { useTheme } from "./config/themeProvider";
 
 function App() {
+  const [isLoggedIn, SetIsLoggedIn] = useState(false);
+  const { darkMode } = useTheme();
+
+  // Handling login in status in the initial load
+  useEffect(() => {
+    const token = sessionStorage.getItem("token");
+    if (token) SetIsLoggedIn(true);
+  }, []);
+
+  console.log(darkMode);
+
+  // toggle theme
+  useEffect(() => {
+    if (darkMode) {
+      document.body.style.backgroundColor = "#4b5563";
+    } else {
+      document.body.style.backgroundColor = "rgb(226, 223, 223)";
+    }
+  }, [darkMode]);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {isLoggedIn ? (
+        <DashBoard SetIsLoggedIn={SetIsLoggedIn} />
+      ) : (
+        <LoginPage SetIsLoggedIn={SetIsLoggedIn} />
+      )}
     </div>
   );
 }
