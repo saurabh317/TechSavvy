@@ -89,8 +89,14 @@ export const matricsColors = [
     borderColor: "rgb(550, 150, 200)",
     backgroundColor: "rgba(550, 150, 200, 0.9)",
     tension: 0.4,
+  },
+  {
+    label: "AOV",
+    code: "AOV",
+    borderColor: "rgb(550, 150, 0)",
+    backgroundColor: "rgba(550, 150, 0, 0.9)",
+    tension: 0.4,
   }
-
 ];
 
 
