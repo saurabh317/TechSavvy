@@ -2,6 +2,8 @@ import React, { useCallback, useState } from "react";
 import { CircularProgress } from '@mui/material';
 import { MailIcon, LockClosedIcon } from "@heroicons/react/solid";
 import logo from "../../assests/TechSavvyLogo.png"
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const LoginPage = ({ SetIsLoggedIn }) => {
   const [inLogInProcess, setInLogInProcess] = useState(false)
@@ -27,11 +29,13 @@ const LoginPage = ({ SetIsLoggedIn }) => {
     })
       .then((response) => response.json())
       .then((data) => {
+        toast.success('✅ Login successfull!');
         postLogin(data)
         setInLogInProcess(false)
         SetIsLoggedIn(true)
       })
       .catch((error) => {
+        toast.error('❌ Failed to login!');
         setInLogInProcess(false)
         console.error("Error:", error)
       });
@@ -45,6 +49,17 @@ const LoginPage = ({ SetIsLoggedIn }) => {
   };
 
   return (
+    <>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        theme="light"
+      />
     <div className="flex items-center justify-center flex-col gap-5 min-h-screen bg-gradient-to-br from-pink-200 via-pink-100 to-blue-200 ">
       <div className="flex items-center">
         <img
@@ -90,7 +105,7 @@ const LoginPage = ({ SetIsLoggedIn }) => {
                 readOnly
                 value={'#Test@123'}
               />
-              <p className="absolute text-pink-500 right-4 top-2.5 text-sm">
+              <p className="absolute text-pink-500 right-4 top-2.5 text-xs">
                 Forgot Password?
               </p>
             </div>
@@ -116,6 +131,7 @@ const LoginPage = ({ SetIsLoggedIn }) => {
         </form>
       </div>
     </div>
+    </>
   );
 }
 

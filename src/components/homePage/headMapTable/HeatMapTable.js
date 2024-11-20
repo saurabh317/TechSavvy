@@ -33,8 +33,8 @@ const HeatMapTable = () => {
         "X-USER-IDENTITY": IDENTITY_TOKEN,
       },
       body: JSON.stringify({
-        startDate: "2024-06-08",
-        endDate: "2024-07-07",
+        startDate: "2024-11-12",
+        endDate: "2024-11-19",
         metrics: ["Impressions", "Clicks", "CPM"],
       }),
     })
