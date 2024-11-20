@@ -83,6 +83,14 @@ export const matricsColors = [
     backgroundColor: "rgba(15, 70, 130, 0.9)",
     tension: 0.4,
   },
+  {
+    label: "CTR%",
+    code: "CTR",
+    borderColor: "rgb(550, 150, 200)",
+    backgroundColor: "rgba(550, 150, 200, 0.9)",
+    tension: 0.4,
+  }
+
 ];
 
 

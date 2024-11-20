@@ -5,6 +5,7 @@ import PerformanceChartHead from "./performanceChart/PerformanceChartHead";
 import PerformanceChart from "./performanceChart/PerformanceChart";
 import HeatMapTable from "./headMapTable/HeatMapTable";
 import { ContentWrapper } from "../../utils/Wrapper";
+import { Divider } from "@mui/material";
 
 const DashBoard = ({ SetIsLoggedIn }) => {
   const rect = document.body.getBoundingClientRect()
@@ -20,6 +21,7 @@ const DashBoard = ({ SetIsLoggedIn }) => {
       {rect.width > '850' && <Sidebar />}
       <ContentWrapper>
         <PerformanceChartHead accumulateSelectedOptions={accumulateSelectedOptions} selectedMatrices={selectedMatrices} />
+        <Divider />
         <PerformanceChart selectedMatrices={selectedMatrices} />
       </ContentWrapper>
       <ContentWrapper>

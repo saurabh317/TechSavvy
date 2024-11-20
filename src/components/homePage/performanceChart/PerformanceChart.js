@@ -6,6 +6,9 @@ import { Chart as ChartJS, CategoryScale, LinearScale,
 import { matricsColors } from "../../../utils/data";
 import { CircularProgress } from "@mui/material";
 import { IDENTITY_TOKEN } from "../../../utils/Wrapper";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useTheme } from "../../../config/themeProvider";
 
 ChartJS.register(
   CategoryScale,
@@ -22,7 +25,16 @@ const PerformanceChart = ({ selectedMatrices }) => {
   const [loading, setLoading] = useState(true)
   const token = sessionStorage.getItem("token");
   const rect = document.body.getBoundingClientRect()
+  const { darkMode } = useTheme();
   const timeLabels = ["0Hr", "2Hr", "4Hr", "6Hr", "8Hr", "10Hr", "12Hr"];
+
+  // Function to format rupees with 'k' for thousands
+  const formatRupees = useCallback((value) => {
+    if (value >= 1000) {
+      return `${(value / 1000).toFixed(1)}k`;
+    }
+    return `${value}`;
+  }, []);
 
   // Chart.js options
   const options = {
@@ -40,36 +52,21 @@ const PerformanceChart = ({ selectedMatrices }) => {
       x: {
         title: {
           display: true,
-          text: "Time of Day",
+          text: "(Time of Day)",
         },
       },
       y: {
-        // Left y-axis for rupees
+        // Left y-axis for (Numbers  / Currency / Percentage)
         type: "linear",
         position: "left",
         title: {
           display: true,
-          text: "Rupees",
+          text: "(Numbers  / Currency / Percentage)",
         },
         ticks: {
-          callback: (value) => `₹${value}`, // Format as rupees
+          callback: (value) => formatRupees(value),
         },
-      },
-      y1: {
-        // Right y-axis for percentages
-        type: "linear",
-        position: "right",
-        grid: {
-          drawOnChartArea: false, // Avoid drawing grid lines for this axis
-        },
-        title: {
-          display: true,
-          text: "Percentage",
-        },
-        ticks: {
-          callback: (value) => `${value}%`, // Format as percentage
-        },
-      },
+      }
     },
   };
 
@@ -79,12 +76,7 @@ const PerformanceChart = ({ selectedMatrices }) => {
   };
 
   // Function prepares the data for the chart to be displayed
-  const prepareData = (data) => {
-    console.log(
-      "Performance Chart Data:",
-      data.result.categories,
-      data.result.series
-    );
+  const prepareData = useCallback((data) => {
     const newData = data.result.series;
     matricsColors.forEach((ele, index) => {
       newData.forEach((e, i) => {
@@ -98,7 +90,7 @@ const PerformanceChart = ({ selectedMatrices }) => {
     });
     setProgressChartDataSets(newData);
     setLoading(false)
-  }
+  }, [])
 
   // fetch data required for the creating progress line chart
   const metricsPerformanceLineChart = useCallback(() => {
@@ -121,8 +113,14 @@ const PerformanceChart = ({ selectedMatrices }) => {
     )
       .then((response) => response.json())
       .then((data) => prepareData(data))
-      .catch((error) => console.error("Error:", error));
-  }, [selectedMatrices, token, setLoading]);
+      .catch((error) => {
+        toast.error('Failed to fetch chart data, Try after some time!');
+        setTimeout(() => {
+          setLoading(false)
+          console.error("Error:", error)
+        }, 3000)
+      });
+  }, [token, selectedMatrices, prepareData]);
 
   useEffect(() => {
     metricsPerformanceLineChart();
@@ -130,9 +128,21 @@ const PerformanceChart = ({ selectedMatrices }) => {
 
   if (loading) {
     return (
-      <div className="flex justify-center mt-4">
-        <CircularProgress style={{ color: "grey" }} />
-      </div>
+      <>
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          theme={!darkMode ? "light" : "dark"}
+        />
+        <div className="flex justify-center mt-4">
+          <CircularProgress style={{ color: "grey" }} />
+        </div>
+      </>
     );
   }
 
@@ -142,5 +152,5 @@ const PerformanceChart = ({ selectedMatrices }) => {
     </div>
   );
 };
- 
+
 export default PerformanceChart;

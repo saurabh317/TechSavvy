@@ -29,15 +29,19 @@ const LoginPage = ({ SetIsLoggedIn }) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        toast.success('✅ Login successfull!');
-        postLogin(data)
-        setInLogInProcess(false)
-        SetIsLoggedIn(true)
+        toast.success('Login successfull!')
+        setTimeout(() => {
+          postLogin(data)
+          setInLogInProcess(false)
+          SetIsLoggedIn(true)
+        }, 2000)
       })
       .catch((error) => {
-        toast.error('❌ Failed to login!');
-        setInLogInProcess(false)
-        console.error("Error:", error)
+        toast.error('Failed to login!');
+        setTimeout(() => {
+          setInLogInProcess(false)
+          console.error("Error:", error)
+        }, 2000)
       });
   }, [SetIsLoggedIn]);
 
@@ -122,10 +126,10 @@ const LoginPage = ({ SetIsLoggedIn }) => {
           {/* Sign In Button */}
           <button
             type="submit"
-            className="w-full px-4 py-2 font-bold text-white bg-indigo-600 rounded hover:bg-indigo-700"
+            className="w-full px-4 py-4 font-bold text-white bg-indigo-600 rounded hover:bg-indigo-700"
           >
             {!inLogInProcess && <p>SIGN IN</p>}
-            {inLogInProcess && <CircularProgress/>}
+            {inLogInProcess && <CircularProgress size={30} />}
           </button>
 
         </form>
