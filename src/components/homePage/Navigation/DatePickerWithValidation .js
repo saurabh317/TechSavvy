@@ -41,7 +41,7 @@ const DateRangePicker = ({ startDate, setStartDate, endDate, setEndDate }) => {
       </div>}
 
       {/* Date Info */}
-      <div className="flex flex-col flex-grow">
+      {hide && <div className="flex flex-col flex-grow">
         <div className="font-medium">
           {hide && "Last 7 Days: "}
           <span className="font-semibold">
@@ -54,7 +54,7 @@ const DateRangePicker = ({ startDate, setStartDate, endDate, setEndDate }) => {
                 )}`}
           </span>
         </div>
-      </div>
+      </div>}
 
       {/* Date Picker */}
       <div>
