@@ -4,6 +4,7 @@ import { SunIcon, MoonIcon, UserIcon } from "@heroicons/react/outline";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import { useTheme } from "../../../config/themeProvider";
+import DatePickerWithValidation from "./DatePickerWithValidation ";
 
 const AccountInfo = ({ SetIsLoggedIn }) => {
   const { darkMode } = useTheme();
@@ -41,7 +42,7 @@ const AccountInfo = ({ SetIsLoggedIn }) => {
   );
 };
 
-const Header = ({ SetIsLoggedIn }) => {
+const Header = ({ SetIsLoggedIn, startDate, setStartDate, endDate, setEndDate }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const dropdownRef = useRef(null);
@@ -75,7 +76,7 @@ const Header = ({ SetIsLoggedIn }) => {
 
   return (
     <header
-      className={`flex items-center justify-between w-auto px-6 py-2 shadow-md 
+      className={`flex items-center justify-between w-auto ${rect.width > 850 ? 'px-6 py-1' : 'px-2 py-4'} shadow-md
         ${darkMode ? "bg-gray-800" : "bg-gray-100"}`}>
       {/* Left Side - Dashboard Title */}
       <h1
@@ -84,37 +85,45 @@ const Header = ({ SetIsLoggedIn }) => {
         Dashboard
       </h1>
 
-      {/* Right Side - Theme Toggle, User Icon, and Dropdown Icon */}
-      <div className="flex items-center space-x-4">
-        {/* Theme Toggle Icon */}
-        <button
-          onClick={changeTheme}
-          className={`p-2 rounded-full
-            ${darkMode ? "text-gray-200" : "text-gray-800"}`}>
-          {isDarkMode ? (
-            <SunIcon className="w-6 h-6" />
-          ) : (
-            <MoonIcon className="w-6 h-6" />
-          )}
-        </button>
+      <div className="flex sm:gap-8">
+        <DatePickerWithValidation
+          startDate={startDate}
+          setStartDate={setStartDate}
+          endDate={endDate}
+          setEndDate={setEndDate}
+        />
+        {/* Right Side - Theme Toggle, User Icon, and Dropdown Icon */}
+        <div className="flex items-center space-x-4">
+          {/* Theme Toggle Icon */}
+          <button
+            onClick={changeTheme}
+            className={`p-2 rounded-full
+              ${darkMode ? "text-gray-200" : "text-gray-800"}`}>
+            {isDarkMode ? (
+              <SunIcon className="w-6 h-6" />
+            ) : (
+              <MoonIcon className="w-6 h-6" />
+            )}
+          </button>
 
-        {/* User Icon and Dropdown */}
-        <div className="relative" ref={dropdownRef}>
-          <div className="flex items-center pointer">
-            <button
-              onClick={toggleDropdown}
-              className={`rounded-full
-                ${darkMode ? "text-gray-200" : "text-gray-800"}`}>
-              <UserIcon className="w-6 h-6" />
-            </button>
-            <button onClick={toggleDropdown}>
-              {!isDropdownOpen && <ArrowDropDownIcon style={{color: `${darkMode ? "white" : "black"}`}} />}
-              {isDropdownOpen && <ArrowDropUpIcon style={{color: `${darkMode ? "white" : "black"}`}} />}
-            </button>
+          {/* User Icon and Dropdown */}
+          <div className="relative" ref={dropdownRef}>
+            <div className="flex items-center pointer">
+              <button
+                onClick={toggleDropdown}
+                className={`rounded-full
+                  ${darkMode ? "text-gray-200" : "text-gray-800"}`}>
+                <UserIcon className="w-6 h-6" />
+              </button>
+              <button onClick={toggleDropdown}>
+                {!isDropdownOpen && <ArrowDropDownIcon style={{color: `${darkMode ? "white" : "black"}`}} />}
+                {isDropdownOpen && <ArrowDropUpIcon style={{color: `${darkMode ? "white" : "black"}`}} />}
+              </button>
+            </div>
+
+            {/* Dropdown Menu */}
+            {isDropdownOpen && <AccountInfo SetIsLoggedIn={SetIsLoggedIn} />}
           </div>
-
-          {/* Dropdown Menu */}
-          {isDropdownOpen && <AccountInfo SetIsLoggedIn={SetIsLoggedIn} />}
         </div>
       </div>
     </header>

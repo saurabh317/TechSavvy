@@ -6,8 +6,9 @@ import { useTheme } from "../../../config/themeProvider";
 import { getColor } from "../../../utils/data";
 
 // Heatmap table component
-const HeatMapTable = () => {
+const HeatMapTable = ({ startDate, endDate }) => {
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false)
   const { darkMode } = useTheme();
   const token = useMemo(() => sessionStorage.getItem("token"), [])
   const timeFrames = [
@@ -25,6 +26,7 @@ const HeatMapTable = () => {
 
   // fetch data required for the creating heatmap table
   const fetchHeatMapData = useCallback(() => {
+    setLoading(true)
     fetch("https://coreapi.hectorai.live/api/day-parting/heatmap-list", {
       method: "POST",
       headers: {
@@ -33,23 +35,24 @@ const HeatMapTable = () => {
         "X-USER-IDENTITY": IDENTITY_TOKEN,
       },
       body: JSON.stringify({
-        startDate: "2024-11-12",
-        endDate: "2024-11-19",
+        startDate: startDate || "2024-11-12",
+        endDate: endDate || "2024-11-19",
         metrics: ["Impressions", "Clicks", "CPM"],
       }),
     })
       .then((response) => response.json())
       .then((data) => {
         setData(data.result);
+        setLoading(false)
       })
       .catch((error) => console.error("Error:", error));
-  }, [token]);
+  }, [endDate, startDate, token]);
 
   useEffect(() => {
     fetchHeatMapData();
   }, [fetchHeatMapData]);
 
-  if (data.length === 0) {
+  if (loading) {
     return (
       <div className="flex justify-center mt-4">
         <CircularProgress style={{ color: "grey" }} />

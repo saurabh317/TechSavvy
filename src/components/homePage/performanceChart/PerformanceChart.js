@@ -20,7 +20,7 @@ ChartJS.register(
   Legend
 );
 
-const PerformanceChart = ({ selectedMatrices }) => {
+const PerformanceChart = ({ selectedMatrices, startDate, endDate }) => {
   const [progressChartDataSets, setProgressChartDataSets] = useState([]);
   const [loading, setLoading] = useState(true)
   const token = sessionStorage.getItem("token");
@@ -105,8 +105,8 @@ const PerformanceChart = ({ selectedMatrices }) => {
           "X-USER-IDENTITY": IDENTITY_TOKEN,
         },
         body: JSON.stringify({
-          startDate: "2024-06-08",
-          endDate: "2024-07-07",
+          startDate: startDate || "2024-11-12",
+          endDate: endDate || "2024-11-19",
           metrics: selectedMatrices
         }),
       }
@@ -120,7 +120,7 @@ const PerformanceChart = ({ selectedMatrices }) => {
           console.error("Error:", error)
         }, 3000)
       });
-  }, [token, selectedMatrices, prepareData]);
+  }, [token, startDate, endDate, selectedMatrices, prepareData]);
 
   useEffect(() => {
     metricsPerformanceLineChart();
