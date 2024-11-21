@@ -33,15 +33,12 @@ function Sidebar() {
 
       {/* Dashboard Icon */}
       <div className="flex items-center px-4 py-4 space-x-2 justify-center">
-        {!isHovered && <HomeIcon className="w-6 h-6" />}
-        {isHovered && (
-          <div className={`flex flex-row px-4 py-4 space-x-2 w-60 rounded-md justify-start
-            ${darkMode ? 'bg-blue-900 text-white' : 'bg-blue-300 text-black'}`}
-          >
-            <HomeIcon className="w-6 h-6" />
-            <span className="text-base font-semibold">Dashboard</span>
-          </div>
-        )}
+        <div className={`flex flex-row ${isHovered ? 'px-4 py-4' : 'px-3 py-3'} space-x-2 w-60 rounded-md justify-start
+          ${darkMode ? 'bg-blue-900 text-white' : 'bg-blue-300 text-black'}`}
+        >
+          <HomeIcon className="w-6 h-6" />
+          {isHovered && <span className="text-base font-semibold">Dashboard</span>}
+        </div>
       </div>
     </div>
   );
