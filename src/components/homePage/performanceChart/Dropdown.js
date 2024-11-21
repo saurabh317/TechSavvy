@@ -16,18 +16,22 @@ const Dropdown = ({ allOptions, handleSelectedOptions, selectedMatrices }) => {
   const handleCheckboxChange = (option) => {
     setSelectedOptions((prevSelectedOptions) =>
       prevSelectedOptions.includes(option)
-        ? prevSelectedOptions.filter((item) => item !== option)
+        ? prevSelectedOptions.filter((item) => {
+          if(selectedOptions.length > 1) {
+            return item !== option
+          }
+          return prevSelectedOptions
+        })
         : [...prevSelectedOptions, option]
     );
   };
 
   const handleCancel = () => {
-    setSelectedOptions([]);
+    setSelectedOptions(selectedMatrices)
     setIsOpen(false);
   };
 
   const handleApply = () => {
-    console.log("Selected Options:", selectedOptions);
     handleSelectedOptions(selectedOptions)
     setIsOpen(false);
   };

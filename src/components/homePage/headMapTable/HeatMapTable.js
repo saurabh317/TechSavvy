@@ -40,7 +40,6 @@ const HeatMapTable = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("Heatmap Data:", data);
         setData(data.result);
       })
       .catch((error) => console.error("Error:", error));

@@ -14,7 +14,6 @@ function App() {
     if (token) SetIsLoggedIn(true);
   }, []);
 
-  console.log(darkMode);
 
   // toggle theme
   useEffect(() => {

@@ -37,7 +37,7 @@ const LoginPage = ({ SetIsLoggedIn }) => {
         }, 2000)
       })
       .catch((error) => {
-        toast.error('Failed to login!');
+        toast.error('server not responding!');
         setTimeout(() => {
           setInLogInProcess(false)
           console.error("Error:", error)
