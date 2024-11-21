@@ -21,3 +21,17 @@ body::-webkit-scrollbar {
 .gradient {
   background: 'linear-gradient(135deg, #ff9a9e, #fad0c4, #a18cd1, #fbc2eb)'
 }
+
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 1.5s forwards; /* Adjust the duration as needed */
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
