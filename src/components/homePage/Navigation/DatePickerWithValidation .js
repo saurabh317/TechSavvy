@@ -31,8 +31,8 @@ const DateRangePicker = ({ startDate, setStartDate, endDate, setEndDate }) => {
 
   return (
     <div
-      className={`flex items-center ${hide ? 'space-x-2 p-2' : ''} border rounded-lg shadow-md max-w-sm sm:max-w-md text-sm flex-col sm:flex-row ${
-        darkMode ? "bg-gray-800 text-gray-200" : "bg-gray-100 text-gray-900"
+      className={`flex items-center ${hide ? 'space-x-2 p-2' : ''}  rounded-lg shadow-md max-w-sm sm:max-w-md text-sm flex-col h-fit sm:h-auto sm:flex-row ${
+        darkMode ? "bg-gray-700 text-gray-200" : "bg-gray-100 text-gray-900"
       }`}
     >
       {/* Icon */}
@@ -60,7 +60,7 @@ const DateRangePicker = ({ startDate, setStartDate, endDate, setEndDate }) => {
       <div>
         <input
           type="date"
-          className={`border rounded-md p-1 focus:outline-none focus:ring-2 ${
+          className={` mt-1 sm:mt-0 w-28 border rounded-md p-1 focus:outline-none focus:ring-2 ${
             darkMode
               ? "text-gray-200 border-gray-600 bg-gray-700 focus:ring-blue-400"
               : "text-gray-800 border-gray-300 bg-white focus:ring-blue-500"
