@@ -1,59 +1,28 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { IDENTITY_TOKEN } from "../../../utils/Wrapper";
+import React, { useEffect, useState } from "react";
 import Dropdown from "./Dropdown";
 import { useTheme } from "../../../config/themeProvider";
-import { toast, ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useApi } from "../../../utils/customHooks";
+import { POST_REQUEST } from "../../../utils/constant";
 
 const PerformanceChartHead = ({ accumulateSelectedOptions, selectedMatrices }) => {
-  const [allOptions, setOptionsAllOptions] = useState([]);
   const [selectedOptions, setSelectedOptions] = useState([]);
-  const token = sessionStorage.getItem("token");
+  const API = "https://coreapi.hectorai.live/api/day-parting/DayPartingFilterList";
+  const body = JSON.stringify({ type: "customizeMetrics" });
   const { darkMode } = useTheme();
 
-  // fetch Options for the dropdown menu
-  const fetchMetricsList = useCallback(() => {
-    fetch(
-      "https://coreapi.hectorai.live/api/day-parting/DayPartingFilterList",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-          "X-USER-IDENTITY": IDENTITY_TOKEN,
-          type: "text",
-        },
-        body: JSON.stringify({
-          type: "customizeMetrics",
-        }),
-      }
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        setOptionsAllOptions(data.result);
-      })
-      .catch((error) => {
-        console.error("Error:", error)
-        toast.error('Failed to fetch Metrics Options, Try after some time!');
-        setTimeout(() => {
-          console.error("Error:", error)
-        }, 3000)
-      });
-  }, [token]);
+  const [allOptions, loading] = useApi(API, POST_REQUEST, body)
 
   const handleSelectedOptions = (allOptions) => {
     setSelectedOptions(allOptions)
   }
 
   useEffect(() => {
-    fetchMetricsList();
-  }, [fetchMetricsList]);
-
-  useEffect(() => {
     if(selectedOptions.length > 0) accumulateSelectedOptions(selectedOptions)
   }, [accumulateSelectedOptions, selectedOptions])
 
-  if (allOptions.length === 0) {
+  if (loading) {
     return
   }
 
@@ -82,7 +51,7 @@ const PerformanceChartHead = ({ accumulateSelectedOptions, selectedMatrices }) =
         </div>
 
         {/* Right Side Dropdown */}
-        <Dropdown allOptions={allOptions} handleSelectedOptions={handleSelectedOptions} selectedMatrices={selectedMatrices} />
+        <Dropdown allOptions={allOptions.result || []} handleSelectedOptions={handleSelectedOptions} selectedMatrices={selectedMatrices} />
       </div>
     </>
   );

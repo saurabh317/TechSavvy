@@ -8,6 +8,7 @@ const Dropdown = ({ allOptions, handleSelectedOptions, selectedMatrices }) => {
   const [isOpen, setIsOpen] = useState(false);
   const rect = document.body.getBoundingClientRect()
   const { darkMode } = useTheme();
+  debugger
   const lastOption = allOptions.findIndex((e) => e.code === selectedOptions[0])
 
   const toggleDropdown = () => {

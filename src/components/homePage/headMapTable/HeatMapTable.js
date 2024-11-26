@@ -1,16 +1,21 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React from "react";
 import { CircularProgress } from "@mui/material";
 import HeatMapTableHead from "./HeatMapTableHead";
-import { IDENTITY_TOKEN } from "../../../utils/Wrapper";
 import { useTheme } from "../../../config/themeProvider";
-import { getColor } from "../../../utils/data";
+import { getColor, POST_REQUEST } from "../../../utils/constant";
+import { useApi } from "../../../utils/customHooks";
 
 // Heatmap table component
 const HeatMapTable = ({ startDate, endDate }) => {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false)
+  const API = "https://coreapi.hectorai.live/api/day-parting/heatmap-list";
   const { darkMode } = useTheme();
-  const token = useMemo(() => sessionStorage.getItem("token"), [])
+
+  const body = JSON.stringify({
+    startDate: startDate || "2024-11-12",
+    endDate: endDate || "2024-11-19",
+    metrics: ["Impressions", "Clicks", "CPM"],
+  })
+
   const timeFrames = [
     "12am", "1am", "2am", "3am", "4am",
     "5am", "6am", "7am", "8am", "9am",
@@ -19,38 +24,13 @@ const HeatMapTable = ({ startDate, endDate }) => {
     "8pm", "9pm", "10pm", "11pm"
   ];
 
+  const [res, loading] = useApi(API, POST_REQUEST, body)
+  const data = res?.result || []
+
   // Initialize totals for each column
   const totalImpressions = new Array(data.length).fill(0);
   const totalClicks = new Array(data.length).fill(0);
   const totalCPM = new Array(data.length).fill(0);
-
-  // fetch data required for the creating heatmap table
-  const fetchHeatMapData = useCallback(() => {
-    setLoading(true)
-    fetch("https://coreapi.hectorai.live/api/day-parting/heatmap-list", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-        "X-USER-IDENTITY": IDENTITY_TOKEN,
-      },
-      body: JSON.stringify({
-        startDate: startDate || "2024-11-12",
-        endDate: endDate || "2024-11-19",
-        metrics: ["Impressions", "Clicks", "CPM"],
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setData(data.result);
-        setLoading(false)
-      })
-      .catch((error) => console.error("Error:", error));
-  }, [endDate, startDate, token]);
-
-  useEffect(() => {
-    fetchHeatMapData();
-  }, [fetchHeatMapData]);
 
   if (loading) {
     return (

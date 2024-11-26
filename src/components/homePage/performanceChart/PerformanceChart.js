@@ -3,12 +3,12 @@ import { Line } from "react-chartjs-2";
 import { Chart as ChartJS, CategoryScale, LinearScale,
   Title, Tooltip, Legend, PointElement, LineElement,
 } from "chart.js";
-import { matricsColors } from "../../../utils/data";
+import { matricsColors, POST_REQUEST } from "../../../utils/constant";
 import { CircularProgress } from "@mui/material";
-import { IDENTITY_TOKEN } from "../../../utils/Wrapper";
-import { toast, ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useTheme } from "../../../config/themeProvider";
+import { useApi } from "../../../utils/customHooks";
 
 ChartJS.register(
   CategoryScale,
@@ -22,10 +22,14 @@ ChartJS.register(
 
 const PerformanceChart = ({ selectedMatrices, startDate, endDate }) => {
   const [progressChartDataSets, setProgressChartDataSets] = useState([]);
-  const [loading, setLoading] = useState(true)
-  const token = sessionStorage.getItem("token");
   const rect = document.body.getBoundingClientRect()
   const { darkMode } = useTheme();
+  const API = "https://coreapi.hectorai.live/api/day-parting/DayPartingPerformanceGraphList";
+  const body = JSON.stringify({
+    startDate: startDate || "2024-11-12",
+    endDate: endDate || "2024-11-19",
+    metrics: selectedMatrices
+  })
   const timeLabels = ["0Hr", "2Hr", "4Hr", "6Hr", "8Hr", "10Hr", "12Hr"];
 
   // Function to format rupees with 'k' for thousands
@@ -89,42 +93,13 @@ const PerformanceChart = ({ selectedMatrices, startDate, endDate }) => {
       });
     });
     setProgressChartDataSets(newData);
-    setLoading(false)
   }, [])
 
-  // fetch data required for the creating progress line chart
-  const metricsPerformanceLineChart = useCallback(() => {
-    setLoading(true)
-    fetch(
-      "https://coreapi.hectorai.live/api/day-parting/DayPartingPerformanceGraphList",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-          "X-USER-IDENTITY": IDENTITY_TOKEN,
-        },
-        body: JSON.stringify({
-          startDate: startDate || "2024-11-12",
-          endDate: endDate || "2024-11-19",
-          metrics: selectedMatrices
-        }),
-      }
-    )
-      .then((response) => response.json())
-      .then((data) => prepareData(data))
-      .catch((error) => {
-        toast.error('Failed to fetch chart data, Try after some time!');
-        setTimeout(() => {
-          setLoading(false)
-          console.error("Error:", error)
-        }, 3000)
-      });
-  }, [token, startDate, endDate, selectedMatrices, prepareData]);
+  const [res, loading] = useApi(API, POST_REQUEST, body)
 
   useEffect(() => {
-    metricsPerformanceLineChart();
-  }, [metricsPerformanceLineChart, selectedMatrices]);
+    if (res?.result?.series) prepareData(res)
+  }, [prepareData, res])
 
   if (loading) {
     return (
