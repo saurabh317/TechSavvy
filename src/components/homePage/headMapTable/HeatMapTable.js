@@ -2,8 +2,9 @@ import React from "react";
 import { CircularProgress } from "@mui/material";
 import HeatMapTableHead from "./HeatMapTableHead";
 import { useTheme } from "../../../config/themeProvider";
-import { getColor, POST_REQUEST } from "../../../utils/constant";
 import { useApi } from "../../../utils/customHooks";
+import { POST_REQUEST } from "../../../utils/constant";
+import { getColor } from "../../../utils/utility";
 
 // Heatmap table component
 const HeatMapTable = ({ startDate, endDate }) => {
